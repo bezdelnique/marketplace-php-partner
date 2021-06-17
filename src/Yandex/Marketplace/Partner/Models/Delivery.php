@@ -14,6 +14,7 @@ class Delivery extends Model
     protected $id;
     protected $serviceName;
     protected $type;
+    protected $outlet;
     protected $region;
     protected $shipments;
     protected $deliveryServiceId;
@@ -77,5 +78,13 @@ class Delivery extends Model
     public function getDeliveryServiceId()
     {
         return $this->deliveryServiceId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOutletCode()
+    {
+        return $this->outlet[0]['code'];
     }
 }

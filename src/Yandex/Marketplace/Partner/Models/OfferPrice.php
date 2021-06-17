@@ -8,6 +8,7 @@ use Yandex\Common\Model;
 class OfferPrice extends Model
 {
     protected $marketSku;
+    protected $shopSku;
     protected $price;
     protected $updatedAt;
 
@@ -21,6 +22,14 @@ class OfferPrice extends Model
     public function getMarketSku()
     {
         return $this->marketSku;
+    }
+
+    /**
+     * @return string
+     */
+    public function getShopSku()
+    {
+        return $this->shopSku;
     }
 
     /**
