@@ -85,6 +85,6 @@ class Delivery extends Model
      */
     public function getOutletCode()
     {
-        return $this->outlet[0]['code'];
+        return $this->outlet['code'];
     }
 }
