@@ -70,7 +70,7 @@ class Buyer extends Model
     /**
      * @return string
      */
-    public function getMiddleName(): string
+    public function getMiddleName(): ?string
     {
         return $this->middleName;
     }
