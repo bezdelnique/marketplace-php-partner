@@ -22,6 +22,7 @@ class Order extends Model
     const STATUS_DELIVERED = "DELIVERED";
     const STATUS_DELIVERY = "DELIVERY";
     const STATUS_PICKUP = "PICKUP";
+    const STATUS_PENDING = "PENDING";
     const STATUS_PROCESSING = "PROCESSING";
 
     const SUBSTATUS_STARTED = "STARTED";
