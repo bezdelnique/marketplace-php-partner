@@ -81,7 +81,7 @@ class Buyer extends Model
      */
     public function getEmail(): string
     {
-        return $this->email;
+        return $this->email ?? '';
     }
 
 
