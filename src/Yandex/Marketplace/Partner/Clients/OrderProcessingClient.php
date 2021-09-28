@@ -3,11 +3,11 @@
 namespace Yandex\Marketplace\Partner\Clients;
 
 use Yandex\Marketplace\Partner\Models\Response\GetDeliveryLabelsDataResponse;
-use Yandex\Marketplace\Partner\Models\Response\GetUpdateOrderResponse;
-use Yandex\Marketplace\Partner\Models\Response\GetInfoOrderBoxesResponse;
-use Yandex\Marketplace\Partner\Models\Response\GetOrdersResponse;
-use Yandex\Marketplace\Partner\Models\Response\GetOrderResponse;
 use Yandex\Marketplace\Partner\Models\Response\GetDeliveryServiceResponse;
+use Yandex\Marketplace\Partner\Models\Response\GetInfoOrderBoxesResponse;
+use Yandex\Marketplace\Partner\Models\Response\GetOrderResponse;
+use Yandex\Marketplace\Partner\Models\Response\GetOrdersResponse;
+use Yandex\Marketplace\Partner\Models\Response\GetUpdateOrderResponse;
 use Yandex\Marketplace\Partner\Models\Response\PostResponse;
 use Yandex\Marketplace\Partner\Models\Response\UpdateOrdersStatusesResponse;
 
@@ -41,6 +41,35 @@ class OrderProcessingClient extends Client
         $getUpdateOrderResponse = new GetUpdateOrderResponse($decodedResponseBody);
 
         return $getUpdateOrderResponse->getOrder();
+    }
+
+    /**
+     * Confirm order cancellation
+     *
+     * @https://yandex.ru/dev/market/partner-dsbs/doc/dg/reference/put-campaigns-id-orders-id-cancellation-accept.html
+     *
+     * @param $campaignId
+     * @param $orderId
+     * @param array $params
+     * @param null $dbgKey
+     * @return bool
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Yandex\Common\Exception\ForbiddenException
+     * @throws \Yandex\Common\Exception\UnauthorizedException
+     * @throws \Yandex\Marketplace\Partner\Exception\PartnerRequestException
+     */
+    public function orderCancellationAccept($campaignId, $orderId, array $params = [], $dbgKey = null)
+    {
+        $resource = 'campaigns/' . $campaignId . '/orders/' . $orderId . '/cancellation/accept.json';
+
+        $resource = $this->addDebugKey($resource, $dbgKey);
+        $response = $this->sendRequest(
+            'PUT',
+            $this->getServiceUrl($resource),
+            ['json' => $params]
+        );
+
+        return ($response->getStatusCode() == 200);
     }
 
     /**
