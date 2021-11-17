@@ -2,6 +2,7 @@
 
 namespace Yandex\Marketplace\Partner\Clients;
 
+use Yandex\Marketplace\Partner\Models\Buyer;
 use Yandex\Marketplace\Partner\Models\Response\GetDeliveryLabelsDataResponse;
 use Yandex\Marketplace\Partner\Models\Response\GetDeliveryServiceResponse;
 use Yandex\Marketplace\Partner\Models\Response\GetInfoOrderBoxesResponse;
@@ -152,6 +153,18 @@ class OrderProcessingClient extends Client
 
         return $getOrderResponse->getOrder();
     }
+
+
+    public function getOrderBuyer($campaignId, $orderId, array $params = [], $dbgKey = null)
+    {
+        $resource = 'campaigns/' . $campaignId . '/orders/' . $orderId . '/buyer.json';
+        $resource .= '?' . $this->buildQueryString($params, $dbgKey);
+        $response = $this->sendRequest('GET', $this->getServiceUrl($resource));
+        $decodedResponseBody = $this->getDecodedBody($response->getBody());
+
+        return new Buyer($decodedResponseBody['result']);
+    }
+
 
     /**
      * Return delivery services

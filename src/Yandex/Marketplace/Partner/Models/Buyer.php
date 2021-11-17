@@ -88,7 +88,7 @@ class Buyer extends Model
     /**
      * @return string
      */
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
