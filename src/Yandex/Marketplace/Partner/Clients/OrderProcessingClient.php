@@ -104,6 +104,38 @@ class OrderProcessingClient extends Client
         return $getInfoOrderBoxesResponse;
     }
 
+
+    /**
+     * @see DBS - https://yandex.ru/dev/market/partner-dsbs/doc/dg/reference/put-campaigns-id-orders-id-items.html
+     * @see FBS - https://yandex.ru/dev/market/partner-marketplace-cd/doc/dg/reference/put-campaigns-id-orders-id-items.html
+     *
+     * @param $campaignId
+     * @param $orderId
+     * @param array $params
+     * @param null $dbgKey
+     * @return PostResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Yandex\Common\Exception\ForbiddenException
+     * @throws \Yandex\Common\Exception\UnauthorizedException
+     * @throws \Yandex\Marketplace\Partner\Exception\PartnerRequestException
+     */
+    public function putOrderItems($campaignId, $orderId, array $params = [], $dbgKey = null)
+    {
+        $resource = 'campaigns/' . $campaignId . '/orders/' . $orderId . '/items.json';
+        $resource = $this->addDebugKey($resource, $dbgKey);
+        $response = $this->sendRequest(
+            'PUT',
+            $this->getServiceUrl($resource),
+            ['json' => $params]
+        );
+        $decodedResponseBody = $this->getDecodedBody($response->getBody());
+        if ($decodedResponseBody) {
+            return new PostResponse($decodedResponseBody);
+        }
+        return new PostResponse(['status' => PostResponse::RESPONSE_STATUS_OK]);
+    }
+
+
     /**
      * Returns information about orders.
      *
