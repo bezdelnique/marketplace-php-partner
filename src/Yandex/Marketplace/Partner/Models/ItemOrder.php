@@ -10,6 +10,7 @@ class ItemOrder extends Model
     protected $offerId;
     protected $count;
     protected $price;
+    protected $buyerPrice;
     protected $vat;
     protected $promos;
     protected $feeUE;
@@ -20,6 +21,10 @@ class ItemOrder extends Model
 
     protected $mappingClasses = [
         'promos' => Promos::class,
+    ];
+
+    protected $propNameMap = [
+        'buyer-price' => 'buyerPrice',
     ];
 
     /**
@@ -52,6 +57,14 @@ class ItemOrder extends Model
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * @return double
+     */
+    public function getBuyerPrice()
+    {
+        return $this->buyerPrice;
     }
 
     /**
