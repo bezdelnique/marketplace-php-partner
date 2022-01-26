@@ -97,9 +97,9 @@ class Client extends AbstractServiceClient
      * but transform key=>value where key == value to "?key" param.
      *
      * @param array|object $queryData
-     * @param string       $prefix
-     * @param string       $argSeparator
-     * @param int          $encType
+     * @param string $prefix
+     * @param string $argSeparator
+     * @param int $encType
      *
      * @return string $queryString
      */
@@ -132,9 +132,9 @@ class Client extends AbstractServiceClient
     /**
      * Sends a request
      *
-     * @param string $method  HTTP method
-     * @param string $uri     URI object or string.
-     * @param array  $options Request options to apply.
+     * @param string $method HTTP method
+     * @param string $uri URI object or string.
+     * @param array $options Request options to apply.
      *
      * @return \Psr\Http\Message\ResponseInterface
      *
@@ -169,10 +169,12 @@ class Client extends AbstractServiceClient
                 throw new UnauthorizedException($message);
             }
 
-            throw new PartnerRequestException(
+            $e = new PartnerRequestException(
                 'Service responded with error code: "' . $code . '" and message: "' . $message . '"',
                 $code
             );
+            $e->setWorkload($result->getBody());
+            throw $e;
         }
 
         return $response;
@@ -180,7 +182,7 @@ class Client extends AbstractServiceClient
 
     protected function addDebugKey($resource, $dbgKey)
     {
-        if($dbgKey) {
+        if ($dbgKey) {
             return $resource . '?dbg=' . $dbgKey;
         }
         return $resource;
