@@ -173,7 +173,7 @@ class Client extends AbstractServiceClient
                 'Service responded with error code: "' . $code . '" and message: "' . $message . '"',
                 $code
             );
-            $e->setWorkload($result->getBody());
+            $e->setResponseBody($result->getBody());
             throw $e;
         }
 

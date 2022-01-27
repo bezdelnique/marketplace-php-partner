@@ -9,20 +9,20 @@ class PartnerRequestException extends PartnerException
     /**
      * @var string
      */
-    private $workload;
+    private $responseBody;
 
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
 
-    public function setWorkload(string $workload)
+    public function setResponseBody(string $responseBody)
     {
-        $this->workload = $workload;
+        $this->responseBody = $responseBody;
     }
 
-    public function getWorkload(): string
+    public function getResponseBody(): string
     {
-        return $this->workload;
+        return $this->responseBody;
     }
 }
