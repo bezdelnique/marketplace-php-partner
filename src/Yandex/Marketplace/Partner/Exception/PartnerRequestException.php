@@ -11,6 +11,16 @@ class PartnerRequestException extends PartnerException
      */
     private $responseBody;
 
+    /**
+     * @var int
+     */
+    private $responseCode;
+
+    /**
+     * @var string
+     */
+    private $responseMessage;
+
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
@@ -21,8 +31,28 @@ class PartnerRequestException extends PartnerException
         $this->responseBody = $responseBody;
     }
 
+    public function setResponseCode(int $responseCode)
+    {
+        $this->responseCode = $responseCode;
+    }
+
+    public function setResponseMessage(string $responseMessage)
+    {
+        $this->responseMessage = $responseMessage;
+    }
+
     public function getResponseBody(): string
     {
         return $this->responseBody;
+    }
+
+    public function getResponseCode(): int
+    {
+        return $this->responseCode;
+    }
+
+    public function getResponseMessage(): string
+    {
+        return $this->responseMessage;
     }
 }

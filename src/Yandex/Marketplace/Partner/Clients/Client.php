@@ -174,6 +174,8 @@ class Client extends AbstractServiceClient
                 $code
             );
             $e->setResponseBody($result->getBody());
+            $e->setResponseCode($code);
+            $e->setResponseMessage($message);
             throw $e;
         }
 
