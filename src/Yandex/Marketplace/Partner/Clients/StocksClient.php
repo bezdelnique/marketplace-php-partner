@@ -2,6 +2,7 @@
 
 namespace Yandex\Marketplace\Partner\Clients;
 
+use Yandex\Marketplace\Partner\Models\Response\PostResponse;
 use Yandex\Marketplace\Partner\Models\Response\StocksResponse;
 
 class StocksClient extends Client
@@ -19,5 +20,33 @@ class StocksClient extends Client
         $decodedResponseBody = $this->getDecodedBody($response);
 
         return new StocksResponse($decodedResponseBody);
+    }
+
+    /**
+     * Update stocks
+     *
+     * @see https://yandex.ru/dev/market/partner-marketplace-cd/doc/dg/reference/put-campaigns-id-offers-stocks.html
+     *
+     * @param $campaignId
+     * @param array $params
+     * @param null $dbgKey
+     * @return PostResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Yandex\Common\Exception\ForbiddenException
+     * @throws \Yandex\Common\Exception\UnauthorizedException
+     * @throws \Yandex\Marketplace\Partner\Exception\PartnerRequestException
+     */
+    public function updateStocks($campaignId, array $params = [], $dbgKey = null)
+    {
+        $resource = 'campaigns/' . $campaignId . '/offers/stocks.json';
+        $resource = $this->addDebugKey($resource, $dbgKey);
+        $response = $this->sendRequest(
+            'POST',
+            $this->getServiceUrl($resource),
+            ['json' => $params]
+        );
+        $decodedResponseBody = $this->getDecodedBody($response->getBody());
+
+        return new PostResponse($decodedResponseBody);
     }
 }
