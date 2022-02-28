@@ -41,7 +41,7 @@ class StocksClient extends Client
         $resource = 'campaigns/' . $campaignId . '/offers/stocks.json';
         $resource = $this->addDebugKey($resource, $dbgKey);
         $response = $this->sendRequest(
-            'POST',
+            'PUT',
             $this->getServiceUrl($resource),
             ['json' => $params]
         );
