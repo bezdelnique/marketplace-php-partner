@@ -175,11 +175,11 @@ class OrderProcessingClient extends Client
      * @throws \Yandex\Common\Exception\UnauthorizedException
      * @throws \Yandex\Marketplace\Partner\Exception\PartnerRequestException
      */
-    public function getOrder($campaignId, $orderId, array $params = [], $dbgKey = null)
+    public function getOrder($campaignId, $orderId, array $params = [], $dbgKey = null, array $options = [])
     {
         $resource = 'campaigns/' . $campaignId . '/orders/' . $orderId . '.json';
         $resource .= '?' . $this->buildQueryString($params, $dbgKey);
-        $response = $this->sendRequest('GET', $this->getServiceUrl($resource));
+        $response = $this->sendRequest('GET', $this->getServiceUrl($resource), $options);
         $decodedResponseBody = $this->getDecodedBody($response->getBody());
         $getOrderResponse = new GetOrderResponse($decodedResponseBody);
 
