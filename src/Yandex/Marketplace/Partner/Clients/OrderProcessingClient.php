@@ -29,14 +29,14 @@ class OrderProcessingClient extends Client
      * @throws \Yandex\Common\Exception\UnauthorizedException
      * @throws \Yandex\Marketplace\Partner\Exception\PartnerRequestException
      */
-    public function updateOrderStatus($campaignId, $orderId, array $params = [], $dbgKey = null)
+    public function updateOrderStatus($campaignId, $orderId, array $params = [], $dbgKey = null, array $options = [])
     {
         $resource = 'campaigns/' . $campaignId . '/orders/' . $orderId . '/status.json';
         $resource = $this->addDebugKey($resource, $dbgKey);
         $response = $this->sendRequest(
             'PUT',
             $this->getServiceUrl($resource),
-            ['json' => $params]
+            array_merge(['json' => $params], $options)
         );
         $decodedResponseBody = $this->getDecodedBody($response->getBody());
         $getUpdateOrderResponse = new GetUpdateOrderResponse($decodedResponseBody);
